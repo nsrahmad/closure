@@ -150,8 +150,9 @@
 
 (defun really-make-design-from-aimage (medium aimage width height)
   (declare (ignore medium))
-  (climi::make-rgb-image-design (imagelib::aimage-rgb-image
-				 (imagelib:scale-aimage aimage width height))))
+  (make-instance 'climi::image-pattern
+		 :array (imagelib::aimage-data (imagelib::aimage-rgb-image
+					       (imagelib:scale-aimage aimage width height)))))
 
 (defun reset-caches ()
   (setf *dcache* nil

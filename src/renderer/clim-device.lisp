@@ -474,7 +474,7 @@
 						  aim
 						  (max 1 (round actual-width))
 						  (max 1 (round actual-height)))))
-      (climi::medium-draw-image-design* medium design x y))))
+      (climi::draw-pattern* medium design x y))))
 
 ;; apparently unused  --dfl
 ;;;#+NIL

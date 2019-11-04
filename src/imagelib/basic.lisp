@@ -45,18 +45,18 @@
     ((rgb-image :initarg :rgb-image :accessor aimage-rgb-image)
      (plist :initarg :plist :accessor aimage-plist)))
 
-(defun aimage-width (ai) (climi::image-width (aimage-rgb-image ai)))
-(defun aimage-height (ai) (climi::image-height (aimage-rgb-image ai)))
-(defun aimage-data (ai) (climi::image-data (aimage-rgb-image ai)))
-(defun aimage-alpha-p (ai) (climi::image-alpha-p (aimage-rgb-image ai)))
+(defun aimage-width (ai) (climi::pattern-width (aimage-rgb-image ai)))
+(defun aimage-height (ai) (climi::pattern-height (aimage-rgb-image ai)))
+(defun aimage-data (ai) (if (climi::patternp ai)
+			    (climi::pattern-array ai)
+			    (climi::pattern-array (aimage-rgb-image ai))))
+(defun aimage-alpha-p (ai) (declare (ignore ai)) T)
 
 (defun make-aimage/low (&key width height data alphap plist)
+  (declare (ignore width height alphap))
   (make-instance 'aimage
-    :rgb-image (make-instance 'climi::rgb-image
-		 :width width
-		 :height height
-		 :data data
-		 :alphap alphap)
+		 :rgb-image (make-instance 'clime:image-pattern
+					   :array data)
     :plist plist))
 
 (defmethod print-object ((self aimage) sink)
